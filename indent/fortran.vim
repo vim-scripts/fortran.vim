@@ -9,13 +9,15 @@
 "               for Fortran (http://www.unb.ca/chem/ajit/)
 " Maintainer:   Sébastien Burton <sebastien.burton@gmail.com>
 " License:      Public domain
-" Version:      0.3
+" Version:      0.3.1
 " Last Change:  2008 Sep 22
 
 " Modified indentation rules are used if the Fortran source code is free
 " source form, else nothing is done
 if (b:fortran_fixed_source != 1)
 	setlocal indentexpr=SebuFortranGetFreeIndent()
+	setlocal indentkeys+==~subroutine,=~function,=~forall
+	setlocal indentkeys+==~endsubroutine,=~endfunction,=~endforall
 	" Only define the functions once
 	if exists("*SebuFortranGetFreeIndent")
 		finish
@@ -23,6 +25,7 @@ if (b:fortran_fixed_source != 1)
 else
 	finish
 endif
+
 
 " SebuFortranGetFreeIndent() is modified FortranGetFreeIndent():
 " Returns the indentation of the current line
