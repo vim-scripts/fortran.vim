@@ -7,10 +7,10 @@
 " Installation: Place this script in the $HOME/.vim/after/indent/ directory
 "               and use it with Vim 7.1 and Ajit J. Thakkar's Vim scripts
 "               for Fortran (http://www.unb.ca/chem/ajit/)
-" Maintainer:   SÃ©bastien Burton <sebastien.burton@gmail.com>
+" Maintainer:   Sébastien Burton <sebastien.burton@gmail.com>
 " License:      Public domain
-" Version:      0.3.1
-" Last Change:  2008 Sep 22
+" Version:      0.4
+" Last Change:  2011 May 25
 
 " Modified indentation rules are used if the Fortran source code is free
 " source form, else nothing is done
@@ -54,8 +54,11 @@ function SebuFortranGetFreeIndent()
 	let ind += result*&sw
 	" One shiftwidth indentation for subroutine, function and forall's bodies
 	let line = getline(lnum)
-	if line =~? '^\s*\(pure\|elemental\)\=\s*\(subroutine\|function\)' ||
-				\ line =~? '^\s*\(forall\)'
+	if line =~? '^\s*\(\(recursive\s*\)\=pure\|elemental\)\=\s*subroutine'
+				\ || line =~? '^\s*\(\(recursive\s*\)\=pure\|elemental\)\=\s*'
+				\ . '\(\(integer\|real\|complex\|logical\|character\|type\)'
+				\ . '\((\S\+)\)\=\)\=\s*function'
+				\ || line =~? '^\s*\(forall\)'
 		let ind += &sw
 	endif
 	if getline(v:lnum) =~? '^\s*end\s*\(subroutine\|function\|forall\)'
